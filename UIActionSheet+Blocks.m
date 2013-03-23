@@ -15,24 +15,20 @@ static const void *RI_DISMISSAL_ACTION_KEY = &RI_DISMISSAL_ACTION_KEY;
 @implementation UIActionSheet (Blocks)
 
 -(id)initWithTitle:(NSString *)inTitle cancelButtonItem:(RIButtonItem *)inCancelButtonItem destructiveButtonItem:(RIButtonItem *)inDestructiveItem otherButtonItemsArray:(NSArray *)inOtherButtonItems {
-    if((self = [self initWithTitle:inTitle delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil]))
-    {
+    if((self = [self initWithTitle:inTitle delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil])) {
         NSMutableArray *buttonsArray = [NSMutableArray array];
         [buttonsArray addObjectsFromArray:inOtherButtonItems];
 
-        for(RIButtonItem *item in buttonsArray)
-        {
+        for(RIButtonItem *item in buttonsArray) {
             [self addButtonWithTitle:item.label];
         }
 
-        if(inDestructiveItem)
-        {
+        if(inDestructiveItem) {
             [buttonsArray addObject:inDestructiveItem];
             NSInteger destIndex = [self addButtonWithTitle:inDestructiveItem.label];
             [self setDestructiveButtonIndex:destIndex];
         }
-        if(inCancelButtonItem)
-        {
+        if(inCancelButtonItem) {
             [buttonsArray addObject:inCancelButtonItem];
             NSInteger cancelIndex = [self addButtonWithTitle:inCancelButtonItem.label];
             [self setCancelButtonIndex:cancelIndex];
@@ -44,18 +40,15 @@ static const void *RI_DISMISSAL_ACTION_KEY = &RI_DISMISSAL_ACTION_KEY;
     return self;
 }
 
--(id)initWithTitle:(NSString *)inTitle cancelButtonItem:(RIButtonItem *)inCancelButtonItem destructiveButtonItem:(RIButtonItem *)inDestructiveItem otherButtonItems:(RIButtonItem *)inOtherButtonItems, ...
-{
+-(id)initWithTitle:(NSString *)inTitle cancelButtonItem:(RIButtonItem *)inCancelButtonItem destructiveButtonItem:(RIButtonItem *)inDestructiveItem otherButtonItems:(RIButtonItem *)inOtherButtonItems, ... {
     NSMutableArray *buttonsArray = [NSMutableArray array];
 
     RIButtonItem *eachItem;
     va_list argumentList;
-    if (inOtherButtonItems)
-    {
+    if (inOtherButtonItems) {
         [buttonsArray addObject: inOtherButtonItems];
         va_start(argumentList, inOtherButtonItems);
-        while((eachItem = va_arg(argumentList, RIButtonItem *)))
-        {
+        while((eachItem = va_arg(argumentList, RIButtonItem *))) {
             [buttonsArray addObject: eachItem];
         }
         va_end(argumentList);
@@ -64,8 +57,7 @@ static const void *RI_DISMISSAL_ACTION_KEY = &RI_DISMISSAL_ACTION_KEY;
     return [self initWithTitle:inTitle cancelButtonItem:inCancelButtonItem destructiveButtonItem:inDestructiveItem otherButtonItemsArray:buttonsArray];
 }
 
-- (NSInteger)addButtonItem:(RIButtonItem *)item
-{	
+- (NSInteger)addButtonItem:(RIButtonItem *)item {
     NSMutableArray *buttonsArray = objc_getAssociatedObject(self, RI_BUTTON_ASS_KEY);	
 	
 	NSInteger buttonIndex = [self addButtonWithTitle:item.label];
@@ -74,31 +66,26 @@ static const void *RI_DISMISSAL_ACTION_KEY = &RI_DISMISSAL_ACTION_KEY;
 	return buttonIndex;
 }
 
-- (void)setDismissalAction:(RISimpleAction)dismissalAction
-{
+- (void)setDismissalAction:(RISimpleAction)dismissalAction {
     objc_setAssociatedObject(self, RI_DISMISSAL_ACTION_KEY, nil, OBJC_ASSOCIATION_COPY);
     objc_setAssociatedObject(self, RI_DISMISSAL_ACTION_KEY, dismissalAction, OBJC_ASSOCIATION_COPY);
 }
 
-- (RISimpleAction)dismissalAction
-{
+- (RISimpleAction)dismissalAction {
     return objc_getAssociatedObject(self, RI_DISMISSAL_ACTION_KEY);
 }
 
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
     // Action sheets pass back -1 when they're cleared for some reason other than a button being 
     // pressed.
-    if (buttonIndex >= 0)
-    {
+    if (buttonIndex >= 0) {
         NSArray *buttonsArray = objc_getAssociatedObject(self, RI_BUTTON_ASS_KEY);
         RIButtonItem *item = [buttonsArray objectAtIndex:buttonIndex];
         if(item.action)
             item.action();
     }
     
-    if (self.dismissalAction)
-    {
+    if (self.dismissalAction) {
         self.dismissalAction();
     }
 

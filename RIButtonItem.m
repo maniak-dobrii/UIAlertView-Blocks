@@ -12,13 +12,11 @@
 @synthesize label;
 @synthesize action;
 
-+(id)item
-{
++(id)item {
     return [self new];
 }
 
-+(id)itemWithLabel:(NSString *)inLabel
-{
++(id)itemWithLabel:(NSString *)inLabel {
     RIButtonItem *newItem = [self item];
     [newItem setLabel:inLabel];
     return newItem;

@@ -13,16 +13,14 @@ static const void *RI_BUTTON_ASS_KEY = &RI_BUTTON_ASS_KEY;
 
 @implementation UIAlertView (Blocks)
 
--(id)initWithTitle:(NSString *)inTitle message:(NSString *)inMessage cancelButtonItem:(RIButtonItem *)inCancelButtonItem otherButtonItemsArray:(NSArray *)inOtherButtonItemsArray
-{
+-(id)initWithTitle:(NSString *)inTitle message:(NSString *)inMessage cancelButtonItem:(RIButtonItem *)inCancelButtonItem otherButtonItemsArray:(NSArray *)inOtherButtonItemsArray {
     self = [self initWithTitle:inTitle message:inMessage delegate:self cancelButtonTitle:inCancelButtonItem.label otherButtonTitles:nil];
 
     if (self) {
         NSMutableArray *buttonsArray = [NSMutableArray array];
         [buttonsArray addObjectsFromArray:inOtherButtonItemsArray];
 
-        for (RIButtonItem *item in buttonsArray)
-        {
+        for (RIButtonItem *item in buttonsArray) {
             [self addButtonWithTitle:item.label];
         }
 
@@ -38,18 +36,15 @@ static const void *RI_BUTTON_ASS_KEY = &RI_BUTTON_ASS_KEY;
     return self;
 }
 
--(id)initWithTitle:(NSString *)inTitle message:(NSString *)inMessage cancelButtonItem:(RIButtonItem *)inCancelButtonItem otherButtonItems:(RIButtonItem *)inOtherButtonItems, ... 
-{
+-(id)initWithTitle:(NSString *)inTitle message:(NSString *)inMessage cancelButtonItem:(RIButtonItem *)inCancelButtonItem otherButtonItems:(RIButtonItem *)inOtherButtonItems, ...  {
     NSMutableArray *buttonsArray = [NSMutableArray array];
 
     RIButtonItem *eachItem;
     va_list argumentList;
-    if (inOtherButtonItems)
-    {
+    if (inOtherButtonItems) {
         [buttonsArray addObject: inOtherButtonItems];
         va_start(argumentList, inOtherButtonItems);
-        while((eachItem = va_arg(argumentList, RIButtonItem *)))
-        {
+        while((eachItem = va_arg(argumentList, RIButtonItem *))) {
             [buttonsArray addObject: eachItem];
         }
         va_end(argumentList);
@@ -58,8 +53,7 @@ static const void *RI_BUTTON_ASS_KEY = &RI_BUTTON_ASS_KEY;
     return [self initWithTitle:inTitle message:inMessage cancelButtonItem:inCancelButtonItem otherButtonItemsArray:buttonsArray];
 }
 
-- (NSInteger)addButtonItem:(RIButtonItem *)item
-{	
+- (NSInteger)addButtonItem:(RIButtonItem *)item {
 	NSMutableArray *buttonsArray = objc_getAssociatedObject(self, RI_BUTTON_ASS_KEY);	
 	
 	if (buttonsArray == nil) {
@@ -77,11 +71,9 @@ static const void *RI_BUTTON_ASS_KEY = &RI_BUTTON_ASS_KEY;
 	return buttonIndex;
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
 	// If the button index is -1 it means we were dismissed with no selection
-	if (buttonIndex >= 0)
-	{
+	if (buttonIndex >= 0) {
 		NSArray *buttonsArray = objc_getAssociatedObject(self, RI_BUTTON_ASS_KEY);
 		RIButtonItem *item = [buttonsArray objectAtIndex:buttonIndex];
 
