@@ -8,12 +8,10 @@
 
 #import "RIButtonItem.h"
 
-@implementation RIButtonItem
-@synthesize label;
-@synthesize action;
+@implementation RIButtonItem 
 
 +(id)item {
-    return [self new];
+    return [[self class] new];
 }
 
 +(id)itemWithLabel:(NSString *)inLabel {
