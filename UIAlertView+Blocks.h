@@ -17,4 +17,29 @@
 
 - (NSInteger)addButtonItem:(RIButtonItem *)item;
 
+#pragma mark convenience methods
+/**
+  Shows simple alert with Ok button and text without title.
+ 
+ @param text message for UIAlertView.
+ */
++ (void) simpleAlertWithText: (NSString*)text;
+
+/**
+ Shows simple alert with Ok button, title and text.
+ 
+ @param title title for UIAlertView.
+ @param text message for UIAlertView.
+ */
++ (void) simpleAlertWithTitle: (NSString*)title andText: (NSString*)text;
+
+/**
+ Shows simple alert with Ok button, title and text. Performs block after Ok button tapped.
+ 
+ @param title title for UIAlertView.
+ @param text message for UIAlertView.
+ @param conpletionBlock Block to be performed after Ok button tapped.
+ */
++ (void) simpleAlertWithTitle: (NSString*)title text: (NSString*)text completionBlock: (void(^)())completionBlock;
+
 @end

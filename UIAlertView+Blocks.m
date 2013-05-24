@@ -85,4 +85,26 @@ static const void *RI_BUTTON_ASS_KEY = &RI_BUTTON_ASS_KEY;
 	objc_setAssociatedObject(self, RI_BUTTON_ASS_KEY, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
+#pragma mark convenience methods
++ (void) simpleAlertWithText: (NSString*)text {
+    [self simpleAlertWithTitle:nil text:text completionBlock:nil];
+}
+
++ (void) simpleAlertWithTitle: (NSString*)title andText: (NSString*)text {
+    [self simpleAlertWithTitle:title text:text completionBlock:nil];
+}
+
++ (void) simpleAlertWithTitle: (NSString*)title text: (NSString*)text completionBlock: (void(^)())completionBlock {
+    RIButtonItem *cancelItem = [RIButtonItem item];
+    cancelItem.label = NSLocalizedString(@"Ok", @"UiAlertView+Blocks simple alert cancel button title.");
+    cancelItem.action = completionBlock;
+    
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
+                                                    message:text
+                                           cancelButtonItem:cancelItem
+                                           otherButtonItems:nil, nil];
+    
+    [alert show];
+}
+
 @end
