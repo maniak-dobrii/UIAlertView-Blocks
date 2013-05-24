@@ -70,6 +70,25 @@ That's it!
 
 The UIActionSheet category works virtually the same as the UIAlertView.  Just check out the header for the initializer you need to use.  It's very straightforward.
 
+What's added here
+-------
+Added convenience methods for showing simple alerts with Ok button (with block) title and message.
+
+Usage:
+
+    // Shows simple alert with Ok button and message only. No block is performed.
+    [UIAlertView simpleAlertWithText:@"Message"];
+    
+    // Shows simple alert with Ok button, title and message. No block is performed.
+    [UIAlertView simpleAlertWithTitle:@"Title" andText:@"Message"];
+    
+    // Shows simple alert with Ok button, title and message. Performs block after tapping on Ok.
+    [UIAlertView simpleAlertWithTitle:@"Title" text:@"Message" completionBlock:^{
+        // code
+    }];
+    
+
+
 LICENSE
 -------
 
